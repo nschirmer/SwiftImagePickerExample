@@ -8,18 +8,28 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, ManagePhotosDelegate {
+    
+    var managePhotos = ManagePhotos()
+    @IBOutlet weak var imageView: UIImageView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        managePhotos.delegate = self
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func addPhotoBtn(sender: UIButton) {
+        managePhotos.presentChoiceAlert()
     }
-
-
+    
+    func managePhotosImageChosen(image: UIImage) {
+        imageView.contentMode = .ScaleAspectFit
+        imageView.image = image
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func managePhotosPresentController(controller: UIViewController) {
+        self.presentViewController(controller, animated: true, completion: nil)
+    }
 }
 
